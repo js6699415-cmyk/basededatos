@@ -1,0 +1,190 @@
+<!<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>CV - {{ nombre }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f4f6f9;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        /* HEADER */
+        .header {
+            background: linear-gradient(135deg, #0d6efd, #1e9afe);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .header p {
+            margin-top: 8px;
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        /* SECTIONS */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #0d6efd;
+        }
+
+        /* CARDS */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.07);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .card span {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            background: #e7f1ff;
+            color: #0d6efd;
+            margin-bottom: 8px;
+        }
+
+        /* LIST */
+        ul.skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul.skills li {
+            background: #e7f1ff;
+            color: #0d6efd;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 13px;
+            color: #777;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <h1>{{ nombre }}</h1>
+        <p>
+            📧 {{ contacto.email }} &nbsp; | &nbsp;
+            📞 {{ contacto.telefono }} &nbsp; | &nbsp;
+            📍 {{ contacto.ciudad }}
+        </p>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="section">
+        <h2>Resumen Profesional</h2>
+        <div class="card">
+            {{ resumen }}
+        </div>
+    </div>
+
+    <!-- EXPERIENCIA -->
+    <div class="section">
+        <h2>Experiencia Laboral</h2>
+        <div class="grid">
+            {% for exp in experiencia %}
+            <div class="card">
+                <span class="badge">{{ exp.fechas }}</span>
+                <h3>{{ exp.puesto }}</h3>
+                <span>{{ exp.empresa }}</span>
+                <p>{{ exp.descripcion }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- EDUCACIÓN -->
+    <div class="section">
+        <h2>Educación</h2>
+        <div class="grid">
+            {% for edu in educacion %}
+            <div class="card">
+                <span class="badge">{{ edu.anio }}</span>
+                <h3>{{ edu.titulo }}</h3>
+                <span>{{ edu.institucion }}</span>
+                <p>{{ edu.detalles }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- HABILIDADES -->
+    <div class="section">
+        <h2>Habilidades Técnicas</h2>
+        <ul class="skills">
+            {% for hab in habilidades %}
+            <li>{{ hab }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <footer>
+        © {{ nombre }} – Hoja de vida desarrollada con Django
+    </footer>
+
+</div>
+</body>
+</html>
