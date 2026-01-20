@@ -78,12 +78,22 @@ WSGI_APPLICATION = 'opp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        default= 'postgresql://hojadevida_sd3a_user:VaCfRFlYEHOqiFOOCZfLJJavjhAPMlCN@dpg-d5fb5oeuk2gs7385oocg-a/hojadevida_sd3a' , 
-        conn_max_age=600
-    )
-}    
+if 'RENDER' in os.environ:
+    DATABASES = {
+        'default': dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=True
+        )
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+
+
 
 
 
