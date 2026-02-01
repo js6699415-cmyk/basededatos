@@ -3,7 +3,6 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
-import logging
 from perfil.models import DatosPersonales, ExperienciaLaboral, CursosRealizados, Reconocimientos, ProductosAcademicos, ProductosLaborales, VentaGarage
 
 def get_perfil():
@@ -11,12 +10,8 @@ def get_perfil():
 
 def home(request):
     perfil = get_perfil()
-    if perfil:
-        logging.info(f"Perfil encontrado: {perfil.nombres} {perfil.apellidos}")
-        logging.info(f"Foto URL: {perfil.fotoperfil.url if perfil.fotoperfil else 'No hay foto'}")  # Debug para la URL
-    else:
-        logging.info("No se encontró perfil activo")
-    # ... el resto del código igual
+    if not perfil:
+        perfil = None
 
     resumen_exp = ExperienciaLaboral.objects.filter(
         idperfilconqueestaactivo=perfil,
