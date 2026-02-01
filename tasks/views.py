@@ -19,7 +19,7 @@ def get_perfil():
         "ubicacion": "Manta",  # Agregado (basado en "direcciondomiciliaria" original)
         "estado_civil": "Soltero", 
         "fechanacimiento": "30 de mayo de 2006",
-        "foto": "JGP/static/img/foto.jpg",
+        "fotoperfil_url": None,  # URL de la foto de perfil si tienes una
     }
 
 
