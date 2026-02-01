@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.template.loader import render_to_string
 from xhtml2pdf import pisa
-from perfil.models import DatosPersonales, ExperienciaLaboral, CursosRealizados, Reconocimientos, ProductosAcademicos, ProductosLaborales, VentaGarage  # Ajusta la importación si es necesario
+from perfil.models import DatosPersonales, ExperienciaLaboral, CursosRealizados, Reconocimientos, ProductosAcademicos, ProductosLaborales, VentaGarage
 
 def get_perfil():
     return DatosPersonales.objects.filter(perfilactivo=1).first()
@@ -54,7 +54,6 @@ def home(request):
     }
     return render(request, "hoja_de_vida.html", context)
 
-# Copia las demás funciones de perfil/views.py aquí (experiencia, productos_academicos, etc.) para que sean idénticas.
 def experiencia(request):
     perfil = get_perfil()
     datos = ExperienciaLaboral.objects.filter(
