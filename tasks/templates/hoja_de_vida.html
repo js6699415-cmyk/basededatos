@@ -242,4 +242,35 @@
                 <h4 class="card-title mt-3 border-bottom pb-2">Laborales</h4>
                 <ul class="list-unstyled mt-3">
                     {% for lab in resumen_lab %}
-                        <li class="
+                        <li class="small mb-2 d-flex">
+                            <i class="bi bi-code-square text-secondary me-2 mt-1"></i>
+                            <span>{{ lab.nombreproducto }}</span>
+                        </li>
+                    {% empty %}
+                        <li class="small text-muted">No hay productos laborales.</li>
+                    {% endfor %}
+                </ul>
+                <a href="{% url 'productos_laborales' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+        <div class="card h-100 shadow-sm summary-card">
+            <div class="card-body">
+                <i class="bi bi-tag-fill section-icon text-success"></i>
+                <h4 class="card-title mt-3 border-bottom pb-2">Garage</h4>
+                <div class="d-flex flex-wrap gap-1 mt-3">
+                    {% for item in resumen_garage %}
+                        <span class="badge bg-light text-dark border">{{ item.nombreproducto }}</span>
+                    {% empty %}
+                        <span class="small text-muted">Sin artículos.</span>
+                    {% endfor %}
+                </div>
+                <br>
+                <a href="{% url 'garage' %}" class="btn btn-sm btn-outline-primary mt-2">Ir al Garage</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
