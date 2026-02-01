@@ -94,10 +94,10 @@
     <div class="row align-items-center">
         {% if perfil %}
         <div class="col-lg-3 text-center mb-4 mb-lg-0">
-            {% if perfil.foto %}
-                <img src="{{ perfil.foto.url }}" class="img-fluid rounded-circle profile-img">  <!-- Cambiado aquí -->
+            {% if perfil.fotoperfil %}
+                <img src="{{ perfil.fotoperfil.url }}" class="img-fluid rounded-circle profile-img">
             {% else %}
-                <img src="https://ui-avatars.com/api/?name={{ perfil.nombres }}+{{ perfil.apellidos }}&background=0D6EFD&color=fff&size=160"
+                <img src="https://ui-avatars.com/api/?name={{ perfil.nombres|urlencode }}+{{ perfil.apellidos|urlencode }}&background=0D6EFD&color=fff&size=160"
                      class="img-fluid rounded-circle profile-img">
             {% endif %}
         </div>
@@ -111,22 +111,22 @@
             <div class="contact-info row g-2">
                 <div class="col-md-7 col-12 small">
                     <i class="bi bi-envelope-at-fill"></i>
-                    <span class="info-label">Email:</span> <span class="text-break">{{ perfil.email|default:"N/A" }}</span>
+                    <span class="info-label">Email:</span> <span class="text-break">{{ perfil.email_contacto|default:"N/A" }}</span>
                 </div>
 
                 <div class="col-md-5 col-12 small">
                     <i class="bi bi-telephone-fill"></i>
-                    <span class="info-label">Teléfono:</span> {{ perfil.telefono|default:"N/A" }}
+                    <span class="info-label">Teléfono:</span> {{ perfil.telefonofijo|default:"N/A" }}
                 </div>
 
                 <div class="col-md-6 col-12 small">
                     <i class="bi bi-geo-alt-fill"></i>
-                    <span class="info-label">Ubicación:</span> {{ perfil.ubicacion|default:"N/A" }}
+                    <span class="info-label">Ubicación:</span> {{ perfil.direcciondomiciliaria|default:"N/A" }}
                 </div>
 
                 <div class="col-md-6 col-12 small">
                     <i class="bi bi-card-text"></i>
-                    <span class="info-label">Cédula:</span> {{ perfil.cedula|default:"N/A" }}
+                    <span class="info-label">Cédula:</span> {{ perfil.numerocedula|default:"N/A" }}
                 </div>
 
                 <div class="col-md-6 col-12 small">
@@ -136,13 +136,10 @@
 
                 <div class="col-md-6 col-12 small">
                     <i class="bi bi-heart-fill"></i>
-                    <span class="info-label">Estado Civil:</span> {{ perfil.estado_civil|default:"N/A" }}
+                    <span class="info-label">Estado Civil:</span> {{ perfil.estadocivil|default:"N/A" }}
                 </div>
 
-                <div class="col-md-6 col-12 small">
-                    <i class="bi bi-briefcase-fill"></i>
-                    <span class="info-label">Cargo:</span> {{ perfil.cargo|default:"N/A" }}
-                </div>
+                <!-- Eliminé "Cargo" porque no existe en el modelo; agrega un campo si lo necesitas -->
             </div>
         </div>
 
@@ -189,93 +186,3 @@
                             <span>{{ curso.nombrecurso }}</span>
                         </li>
                     {% empty %}
-                        <li class="small text-muted">No hay cursos registrados.</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'cursos' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm summary-card">
-            <div class="card-body">
-                <i class="bi bi-trophy section-icon" style="color:#ffc107;"></i>
-                <h4 class="card-title mt-3 border-bottom pb-2">Reconocimiento</h4>  <!-- Cambié "Logros" a "Reconocimiento" -->
-                <ul class="list-unstyled mt-3">
-                    {% for rec in resumen_rec %}
-                        <li class="small mb-3 d-flex align-items-center">
-                            <i class="bi bi-star-fill text-warning me-2"></i>
-                            <div>
-                                <span class="fw-bold d-block text-dark">{{ rec.descripcionreconocimiento }}</span>
-                                <small class="text-muted">{{ rec.fechareconocimiento|date:"Y" }}</small>
-                            </div>
-                        </li>
-                    {% empty %}
-                        <li class="small text-muted">No hay logros registrados.</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'reconocimiento' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>  <!-- Cambié href="#" a la URL real -->
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm summary-card">
-            <div class="card-body">
-                <i class="bi bi-book-half section-icon" style="color:#6f42c1;"></i>
-                <h4 class="card-title mt-3 border-bottom pb-2">Académicos</h4>
-                <ul class="list-unstyled mt-3">
-                    {% for acad in resumen_acad %}
-                        <li class="small mb-2 d-flex">
-                            <i class="bi bi-journal-text text-info me-2 mt-1"></i>
-                            <span>{{ acad.titulo }}</span>
-                        </li>
-                    {% empty %}
-                        <li class="small text-muted">No hay productos académicos.</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'productos_academicos' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm summary-card">
-            <div class="card-body">
-                <i class="bi bi-cpu section-icon" style="color:#fd7e14;"></i>
-                <h4 class="card-title mt-3 border-bottom pb-2">Laborales</h4>
-                <ul class="list-unstyled mt-3">
-                    {% for lab in resumen_lab %}
-                        <li class="small mb-2 d-flex">
-                            <i class="bi bi-code-square text-secondary me-2 mt-1"></i>
-                            <span>{{ lab.nombreproducto }}</span>
-                        </li>
-                    {% empty %}
-                        <li class="small text-muted">No hay productos laborales.</li>
-                    {% endfor %}
-                </ul>
-                <a href="{% url 'productos_laborales' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6 col-lg-4">
-        <div class="card h-100 shadow-sm summary-card">
-            <div class="card-body">
-                <i class="bi bi-tag-fill section-icon text-success"></i>
-                <h4 class="card-title mt-3 border-bottom pb-2">Garage</h4>
-                <div class="d-flex flex-wrap gap-1 mt-3">
-                    {% for item in resumen_garage %}
-                        <span class="badge bg-light text-dark border">{{ item.nombreproducto }}</span>
-                    {% empty %}
-                        <span class="small text-muted">Sin artículos.</span>
-                    {% endfor %}
-                </div>
-                <br>
-                 <a href="{% url 'garage' %}" class="btn btn-sm btn-outline-primary mt-2">Ir al Garage</a>  <!-- Cambiado de href="#" a {% url 'garage' %} -->
-            </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
