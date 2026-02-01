@@ -1,27 +1,29 @@
-# opp/urls.py (ajusta este archivo)
+# opp/urls.py
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 
-# Cambia la importación de 'tasks' a 'perfil', ya que tus vistas están en la app 'perfil'
-from perfil import views  # Cambié 'from tasks import views' a 'from perfil import views'
+# Importa las vistas específicamente desde perfil.views para evitar errores de atributo
+from perfil.views import (
+    home, experiencia, productos_academicos, productos_laborales, 
+    cursos, reconocimiento, garage, exportar_cv
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Agrega tus rutas aquí, por ejemplo:
-    path('', views.home, name='home'),
-    path('experiencia/', views.experiencia, name='experiencia'),
-    path('productos_academicos/', views.productos_academicos, name='productos_academicos'),
-    path('productos_laborales/', views.productos_laborales, name='productos_laborales'),
-    path('cursos/', views.cursos, name='cursos'),
-    path('reconocimientos/', views.reconocimiento, name='reconocimientos'),  # Nota: en tu código es 'reconocimiento', no 'reconocimientos'
-    path('garage/', views.garage, name='garage'),
-    path('exportar_cv/', views.exportar_cv, name='exportar_cv'),  # O 'pdf_datos_personales' si prefieres el nombre original
+    path('', home, name='home'),
+    path('experiencia/', experiencia, name='experiencia'),
+    path('productos_academicos/', productos_academicos, name='productos_academicos'),
+    path('productos_laborales/', productos_laborales, name='productos_laborales'),
+    path('cursos/', cursos, name='cursos'),
+    path('reconocimientos/', reconocimiento, name='reconocimientos'),  # Mantuve 'reconocimiento' como en tu código
+    path('garage/', garage, name='garage'),
+    path('exportar_cv/', exportar_cv, name='exportar_cv'),
 ]
 
-# Para servir archivos media en desarrollo
+# Para servir archivos media y static en desarrollo
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
