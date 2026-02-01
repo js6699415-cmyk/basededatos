@@ -1,8 +1,24 @@
 from pathlib import Path
 import os
 import dj_database_url
+import logging  # Agregado para logging básico
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Configura logging para ver errores en Render (opcional, pero útil)
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'ERROR',
+    },
+}
 
 # =========================
 # SECURITY / DEBUG
@@ -23,8 +39,8 @@ WEBSITE_HOSTNAME = os.environ.get("WEBSITE_HOSTNAME")
 if WEBSITE_HOSTNAME:
     ALLOWED_HOSTS.append(WEBSITE_HOSTNAME)
 
-# Agrega tu dominio específico de Render para evitar 500 por host no permitido
-ALLOWED_HOSTS += ["hojadevidaabel.onrender.com"]
+# Agrega tu dominio real de Render (basado en logs)
+ALLOWED_HOSTS += ["basededatos-9sw8.onrender.com"]
 
 # =========================
 # DOTENV (LOCAL ONLY)
@@ -105,7 +121,7 @@ if DATABASE_URL:
         )
     }
 else:
-    # Fallback local (sqlite) - Borra esto si no lo usas para evitar confusiones
+    # Fallback local (sqlite)
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
@@ -138,20 +154,17 @@ STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Si tienes carpeta "static" en tu proyecto, descomenta:
 # STATICFILES_DIRS = [BASE_DIR / "static"]
 
 # =========================
 # MEDIA (Cloudinary)
 # =========================
-# Configuración mejorada para Cloudinary
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
     "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
 }
 
-# Opcional: Si tienes CLOUDINARY_URL en env, úsala (más simple)
 CLOUDINARY_URL = os.environ.get("CLOUDINARY_URL")
 if CLOUDINARY_URL:
     import cloudinary
@@ -159,20 +172,18 @@ if CLOUDINARY_URL:
 
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
-# Mantén esto para compatibilidad, pero Cloudinary lo maneja
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # =========================
-# SECURITY HEADERS (recomendado en producción)
+# SECURITY HEADERS
 # =========================
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_TRUSTED_ORIGINS = [
     "https://*.onrender.com",
-    "https://hojadevidaabel.onrender.com",  # Agrega tu dominio específico
+    "https://basededatos-9sw8.onrender.com",  # Agregado tu dominio real
 ]
 
-# En producción, activa esto una vez que todo funcione por HTTPS:
 if not DEBUG:
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
