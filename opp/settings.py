@@ -65,7 +65,7 @@ INSTALLED_APPS = [
     "cloudinary_storage",
 
     # Tu app
-    "tasks",
+    "perfil",
 ]
 
 # =========================
