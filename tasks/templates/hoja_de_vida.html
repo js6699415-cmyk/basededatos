@@ -97,7 +97,7 @@
             {% if perfil.fotoperfil %}
                 <img src="{{ perfil.fotoperfil.url }}" class="img-fluid rounded-circle profile-img">
             {% else %}
-                <img src="https://ui-avatars.com/api/?name={{ perfil.nombres|urlencode }}+{{ perfil.apellidos|urlencode }}&background=0D6EFD&color=fff&size=160"
+                <img src="https://ui-avatars.com/api/?name={{ perfil.nombres}}+{{ perfil.apellidos}}&background=0D6EFD&color=fff&size=160"
                      class="img-fluid rounded-circle profile-img">
             {% endif %}
         </div>
