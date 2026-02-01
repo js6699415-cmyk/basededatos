@@ -6,9 +6,9 @@ from .models import (
 
 @admin.register(DatosPersonales)
 class DatosPersonalesAdmin(admin.ModelAdmin):
-    list_display = ('nombres', 'apellidos', 'numerocedula', 'email_contacto', 'perfilactivo')  # Agregué 'perfilactivo' para ver el estado activo
-    list_filter = ('sexo', 'estadocivil', 'nacionalidad', 'perfilactivo')  # Filtros por género, estado civil, etc.
-    search_fields = ('nombres', 'apellidos', 'numerocedula', 'email_contacto')  # Búsqueda por nombre, cédula, email
+    list_display = ('nombres', 'apellidos', 'numerocedula', 'email_contacto', 'perfilactivo', 'foto_preview')  # Agregué 'foto_preview' para ver la imagen
+    list_filter = ('sexo', 'estadocivil', 'nacionalidad', 'perfilactivo')
+    search_fields = ('nombres', 'apellidos', 'numerocedula', 'email_contacto')
     fields = (
         'idperfil', 'fotoperfil', 
         'nombres', 'apellidos', 'descripcionperfil', 
@@ -17,7 +17,16 @@ class DatosPersonalesAdmin(admin.ModelAdmin):
         'sexo', 'estadocivil', 'licenciaconducir',
         'direcciondomiciliaria', 'direcciontrabajo', 'sitioweb', 'perfilactivo'
     )
-    readonly_fields = ('idperfil',)  # ID auto-generado, no editable
+    readonly_fields = ('idperfil',)
+
+    # Agrega esta función para mostrar una preview de la foto
+    def foto_preview(self, obj):
+        if obj.fotoperfil:
+            return format_html('<img src="{}" width="50" height="50" style="border-radius: 50%;" />', obj.fotoperfil.url)
+        return "No image"
+    foto_preview.short_description = "Foto Preview"  # Título en la columna
+
+# El resto de las clases admin quedan igual...
 
 @admin.register(ExperienciaLaboral)
 class ExperienciaLaboralAdmin(admin.ModelAdmin):
