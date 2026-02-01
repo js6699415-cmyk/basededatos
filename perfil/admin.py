@@ -97,3 +97,4 @@ class VentaGarageAdmin(admin.ModelAdmin):
         'documento_interes'  # Incluido para PDFs/fichas técnicas
     )
     readonly_fields = ('idventagarage',)
+

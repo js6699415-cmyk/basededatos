@@ -1,8 +1,16 @@
 from django.db import models
+from django.core.validators import FileExtensionValidator
 
 class DatosPersonales(models.Model):
-    idperfil = models.AutoField(primary_key=True)  # Cambiado a AutoField para auto-incremento
-    fotoperfil = models.ImageField(upload_to='foto_perfil/', null=True, blank=True)
+    idperfil = models.AutoField(primary_key=True)
+    fotoperfil = models.ImageField(
+        upload_to='foto_perfil/',
+        null=True,
+        blank=True,
+        validators=[
+            FileExtensionValidator(allowed_extensions=['jpg', 'jpeg', 'png']),
+        ]
+    )
     email_contacto = models.EmailField(max_length=100, null=True, blank=True)
     descripcionperfil = models.CharField(max_length=300)
     perfilactivo = models.IntegerField()
@@ -30,7 +38,7 @@ class DatosPersonales(models.Model):
 
 
 class ExperienciaLaboral(models.Model):
-    idexperiencilaboral = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idexperiencilaboral = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     cargodesempenado = models.CharField(max_length=200)
     nombrempresa = models.CharField(max_length=150)
@@ -54,7 +62,7 @@ class ExperienciaLaboral(models.Model):
 
 class Reconocimientos(models.Model):
     TIPO_CHOICES = [('Académico', 'Académico'), ('Público', 'Público'), ('Privado', 'Privado')]
-    idreconocimiento = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idreconocimiento = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     tiporeconocimiento = models.CharField(max_length=200, choices=TIPO_CHOICES)
     fechareconocimiento = models.DateField()
@@ -70,13 +78,13 @@ class Reconocimientos(models.Model):
 
 
 class CursosRealizados(models.Model):
-    idcursorealizado = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idcursorealizado = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     nombrecurso = models.CharField(max_length=250)
     fechainicio = models.DateField()
     fechafin = models.DateField()
     totalhoras = models.IntegerField()
-    descripcioncurso = models.TextField()  # Cambiado a TextField
+    descripcioncurso = models.TextField()
     entidadpatrocinadora = models.CharField(max_length=150)
     nombrecontactoauspicia = models.CharField(max_length=200)
     telefonocontactoauspicia = models.CharField(max_length=60)
@@ -89,11 +97,11 @@ class CursosRealizados(models.Model):
 
 
 class ProductosAcademicos(models.Model):
-    idproductoacademico = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idproductoacademico = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     nombrerecurso = models.CharField(max_length=200)
     clasificador = models.CharField(max_length=100)
-    descripcion = models.TextField()  # Cambiado a TextField
+    descripcion = models.TextField()
     activarparaqueseveaenfront = models.BooleanField(default=True)
 
     def __str__(self):
@@ -101,14 +109,13 @@ class ProductosAcademicos(models.Model):
 
 
 class ProductosLaborales(models.Model):
-    idproductoslaborales = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idproductoslaborales = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     nombreproducto = models.CharField(max_length=100)
     fechaproducto = models.DateField()
-    descripcion = models.TextField()  # Cambiado a TextField
+    descripcion = models.TextField()
     activarparaqueseveaenfront = models.BooleanField(default=True)
     url_proyecto = models.URLField(max_length=500, blank=True, null=True, verbose_name="Enlace al Proyecto (Opcional)")
-    # Eliminado el campo duplicado 'activarparaqueseveaenfront'
 
     def __str__(self):
         return self.nombreproducto
@@ -116,16 +123,16 @@ class ProductosLaborales(models.Model):
 
 class VentaGarage(models.Model):
     ESTADO_CHOICES = [('Bueno', 'Bueno'), ('Regular', 'Regular')]
-    idventagarage = models.AutoField(primary_key=True)  # Cambiado a AutoField
+    idventagarage = models.AutoField(primary_key=True)
     idperfilconqueestaactivo = models.ForeignKey(DatosPersonales, on_delete=models.CASCADE)
     nombreproducto = models.CharField(max_length=100)
     estadoproducto = models.CharField(max_length=40, choices=ESTADO_CHOICES)
-    descripcion = models.TextField()  # Cambiado a TextField
-    valordelbien = models.DecimalField(max_digits=7, decimal_places=2)  # Aumentado max_digits
+    descripcion = models.TextField()
+    valordelbien = models.DecimalField(max_digits=7, decimal_places=2)
     activarparaqueseveaenfront = models.BooleanField(default=True)
     documento_interes = models.FileField(
-        upload_to='garage/documentos/', 
-        null=True, 
+        upload_to='garage/documentos/',
+        null=True,
         blank=True,
         verbose_name="Documento Adicional (PDF/Foto)"
     )
@@ -135,7 +142,7 @@ class VentaGarage(models.Model):
 
 
 class Curso(models.Model):
-    idcurso = models.AutoField(primary_key=True)  # Agregado para consistencia (PK explícita)
+    idcurso = models.AutoField(primary_key=True)
     nombrecurso = models.CharField(max_length=200)
     entidadpatrocinadora = models.CharField(max_length=200)
     fechafin = models.DateField()
