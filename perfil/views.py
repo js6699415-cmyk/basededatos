@@ -1,27 +1,19 @@
 import io
+import requests
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
-from django.shortcuts import render
-from django.template.loader import render_to_string
+from django.template.loader import get_template, render_to_string
 from xhtml2pdf import pisa
+from pypdf import PdfWriter
 
+from perfil.models import (
+    DatosPersonales, ExperienciaLaboral,
+    CursosRealizados, Reconocimientos,
+    ProductosAcademicos, ProductosLaborales, VentaGarage        
+)
 
-# ✅ PERFIL (diccionario)
 def get_perfil():
-    return {
-        "nombres": "Irvin Javier",
-        "apellidos": "Sanchez Lopez",
-        "descripcionperfil": "Aficionado a aprender nuevas formas de aplicar tecnología e Inteligencia Artificial",
-        "cargo": "Desarrollador en Formación",  # Agregado como sugerencia anterior
-        "email": "js6699415@gmail.com",  # Agregado (basado en "email_contacto" original)
-        "cedula": "13112345678",  # Agregado (basado en "numerocedula" original)
-        "telefono": "0995002629",  # Agregado (basado en "telefonofijo" original)
-        "nacionalidad": "Ecuatoriano",  # Agregado
-        "ubicacion": "Manta",  # Agregado (basado en "direcciondomiciliaria" original)
-        "estado_civil": "Soltero", 
-        "fechanacimiento": "30 de mayo de 2006",
-        "foto": "http://127.0.0.1:8000/JGP/static/img/foto.jpg",
-    }
-
+    return DatosPersonales.objects.filter(perfilactivo=1).first()
 
 def home(request):
     perfil = get_perfil()
@@ -140,7 +132,7 @@ def productos_laborales(request):
 def exportar_cv(request):
     perfil = get_perfil()
 
-    # Experiencia
+    # Experiencia para el PDF (igual que en home)
     items = [
         {
             "cargodesempenado": "Desarrollador Web",
@@ -150,62 +142,27 @@ def exportar_cv(request):
             "fechafingestion": None,
             "descripcionfunciones": "Desarrollo de aplicaciones web con Django.\nMantenimiento de sistemas.",
         },
+        # Agrega más si quieres
     ]
 
-    # Cursos
+    # si por ahora no usas BD, deja listas manuales:
     cursos = [
         {"nombrecurso": "SQL - Curso completo de Bases de Datos (SQL y MySQL).", "totalhoras": 40},
         {"nombrecurso": "Python básico - Introducción a programación.", "totalhoras": 30},
         {"nombrecurso": "Microsoft Access - Gestión de bases de datos.", "totalhoras": 20},
     ]
-
-    # Reconocimientos
     reconocimientos = [
-        {"descripcionreconocimiento": "Reconocimiento académico", "entidadpatrocinadora": "ULEAM", "fechareconocimiento": "2025-01-01"},
+        {"tiporeconocimiento": "Reconocimiento académico", "descripcionreconocimiento": "ULEAM"},
     ]
-
-    # Productos académicos (hardcodeados)
-    productos = [
-        {
-            "titulo": "Investigación en Inteligencia Artificial",
-            "descripcion": "Estudio sobre aplicaciones de IA en educación.",
-            "tipo": "Publicación",
-        },
-        {
-            "titulo": "Tesis de Maestría en Desarrollo Web",
-            "descripcion": "Análisis de frameworks modernos para aplicaciones web.",
-            "tipo": "Tesis",
-        },
-    ]
-
-    # Productos laborales (hardcodeados)
-    productos_laborales = [
-        {
-            "nombreproducto": "Sistema de Inventario",
-            "descripcion": "CRUD + reportes + login.",
-        },
-        {
-            "nombreproducto": "Landing Profesional",
-            "descripcion": "Sitio responsive para portafolio.",
-        },
-    ]
-
-    # Garage (vacío por ahora, agrega si quieres)
-    garage = []
 
     context = {
         "perfil": perfil,
-        "items": items,
+        "items": items,  # Ahora incluye experiencia
         "cursos": cursos,
         "reconocimientos": reconocimientos,
-        "productos": productos,
-        "productos_laborales": productos_laborales,
-        "garage": garage,
-        "incl_experiencia": True,
-        "incl_cursos": True,
-        "incl_logros": True,
-        "incl_proyectos": True,
-        "incl_garage": False,  # Cambia a True si agregas datos
+        "show_exp": True,
+        "show_cursos": True,
+        "show_rec": True,
     }
 
     html = render_to_string("cv_pdf.html", context)
@@ -220,9 +177,7 @@ def exportar_cv(request):
     response["Content-Disposition"] = 'attachment; filename="CV_Irvin_Javier_Sanchez_Lopez.pdf"'
     return response
 
-
-
-
+# ... (todo lo anterior igual)
 
 def cursos(request):
     perfil = get_perfil()
@@ -259,6 +214,15 @@ def cursos(request):
         "perfil": perfil,
         "datos": datos
     })
+
+# Elimina esta función (cursos_view) ya que no la necesitas
+# from django.shortcuts import render
+# from .models import Perfil, Curso  # Ajusta según tus modelos
+
+# def cursos_view(request):
+#     perfil = Perfil.objects.first()  # O filtra por usuario si es necesario
+#     datos = Curso.objects.all()  # O filtra si hay más lógica
+#     return render(request, 'cursos.html', {'perfil': perfil, 'datos': datos})
 def reconocimiento(request):
     perfil = get_perfil()
 
