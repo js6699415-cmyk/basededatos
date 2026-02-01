@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'perfil',
-    'tasks',
+    
 ]
 
 # Middlewares
