@@ -100,7 +100,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "tasks.wsgi.application"
+WSGI_APPLICATION = "opp.wsgi.application"
 
 # =========================
 # DATABASE (Postgres en Render)
