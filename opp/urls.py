@@ -16,7 +16,7 @@ urlpatterns = [
     path('productos_academicos/', productos_academicos, name='productos_academicos'),
     path('productos_laborales/', productos_laborales, name='productos_laborales'),
     path('cursos/', cursos, name='cursos'),
-    path('reconocimiento/', reconocimiento, name='reconocimiento'),  # Mantuve 'reconocimiento' como en tu código
+    path('reconocimientos/', reconocimientos, name='reconocimientos'),  # Mantuve 'reconocimiento' como en tu código
     path('garage/', garage, name='garage'),
     path('exportar_cv/', exportar_cv, name='exportar_cv'),
 ]

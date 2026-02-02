@@ -281,7 +281,7 @@ def cursos(request):
         "datos": datos
     })
 
-def reconocimiento(request):
+def reconocimientos(request):
     perfil = get_perfil()
 
     # ✅ Datos hardcodeados para reconocimientos (ajusta según tus campos)

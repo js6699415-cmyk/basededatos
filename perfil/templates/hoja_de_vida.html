@@ -178,14 +178,14 @@
         <div class="card h-100 shadow-sm summary-card">
             <div class="card-body">
                 <i class="bi bi-trophy section-icon" style="color:#ffc107;"></i>
-                <h4 class="card-title mt-3 border-bottom pb-2">Reconocimiento</h4>
+                <h4 class="card-title mt-3 border-bottom pb-2">Reconocimientos</h4>
                 <ul class="list-unstyled mt-3">
                     {% for rec in resumen_rec %}
                         <li class="small mb-3 d-flex align-items-center">
                             <i class="bi bi-star-fill text-warning me-2"></i>
                             <div>
-                                <span class="fw-bold d-block text-dark">{{ rec.descripcionreconocimiento }}</span>
-                                <small class="text-muted">{{ rec.fechareconocimiento|date:"Y" }}</small>
+                                <span class="fw-bold d-block text-dark">{{ rec.descripcionreconocimientos }}</span>
+                                <small class="text-muted">{{ rec.fechareconocimientos|date:"Y" }}</small>
                             </div>
                         </li>
                     {% empty %}
