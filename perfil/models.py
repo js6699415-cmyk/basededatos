@@ -136,6 +136,7 @@ class VentaGarage(models.Model):
         blank=True,
         verbose_name="Documento Adicional (PDF/Foto)"
     )
+    foto_producto = models.ImageField(upload_to='garage/fotos/', null=True, blank=True)  # Agregado para consistencia con tu hardcode
 
     def __str__(self):
         return f"{self.nombreproducto} - ${self.valordelbien}"
