@@ -78,7 +78,7 @@ ROOT_URLCONF = 'opp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Agregué el directorio global de templates
+        'DIRS': [BASE_DIR / 'perfil' / 'templates'],  # Cambiado a 'perfil/templates' para usar la carpeta dentro de la app
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
