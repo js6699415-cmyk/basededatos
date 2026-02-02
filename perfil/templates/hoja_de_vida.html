@@ -72,24 +72,6 @@
     }
 </style>
 
-<!-- Modal para Descargar CV -->
-<div class="modal fade" id="modalPDF" tabindex="-1" aria-labelledby="modalPDFLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalPDFLabel">Descargar Hoja de Vida</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <p>¿Quieres descargar la hoja de vida completa en PDF?</p>
-                <a href="{% url 'exportar_cv' %}" class="btn btn-primary btn-cv">
-                    <i class="bi bi-file-earmark-pdf-fill me-2"></i>Descargar Ahora
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div class="hero-section">
     <div class="row align-items-center">
         {% if perfil %}
@@ -210,7 +192,7 @@
                         <li class="small text-muted">No hay logros registrados.</li>
                     {% endfor %}
                 </ul>
-                <a href="{% url 'reconocimiento' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
+                <a href="{% url 'reconocimientos' %}" class="btn btn-sm btn-outline-primary mt-2">Ver más</a>
             </div>
         </div>
     </div>
