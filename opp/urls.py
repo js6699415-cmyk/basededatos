@@ -1,3 +1,5 @@
+# opp/urls.py
+
 from django.contrib import admin
 from django.urls import path
 from django.conf import settings
@@ -16,7 +18,7 @@ urlpatterns = [
     path('productos_academicos/', productos_academicos, name='productos_academicos'),
     path('productos_laborales/', productos_laborales, name='productos_laborales'),
     path('cursos/', cursos, name='cursos'),
-    path('reconocimientos/', reconocimientos, name='reconocimientos'),  # Mantuve 'reconocimiento' como en tu código
+    path('reconocimientos/', reconocimiento, name='reconocimientos'),  # Mantuve 'reconocimiento' como en tu código
     path('garage/', garage, name='garage'),
     path('exportar_cv/', exportar_cv, name='exportar_cv'),
 ]

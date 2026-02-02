@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'perfil',
+    
 ]
 
 # Middlewares
@@ -78,7 +79,7 @@ ROOT_URLCONF = 'opp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'perfil' / 'templates'],  # Cambiado a 'perfil/templates' para usar la carpeta dentro de la app
+        'DIRS': [], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -113,7 +114,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
-] if (BASE_DIR / 'static').exists() else []  # Corrección para evitar warning
+]
 
 # --- CONFIGURACIÓN DE CLOUDINARY ---
 CLOUDINARY_STORAGE = {
